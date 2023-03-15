@@ -42,7 +42,23 @@ const readFile =  require('./readFile/readFile');
         await page.keyboard.press('Enter')
         await action.clickspanButton(page,"設定")
         await action.clickspanButton(page,"ユーザ情報一覧ページ")
-        for(let i =0; i<100; i++){
+        await action.clicktdButton(page,"鬼塚　直哉");
+        await page.waitForTimeout(500)
+        await page.keyboard.press('Tab')
+        await page.keyboard.press('Tab')       
+        await page.waitForTimeout(500)
+        await page.keyboard.press('Tab')       
+        await page.waitForTimeout(500)
+        await page.keyboard.press('Tab')       
+        await page.waitForTimeout(500)
+        await page.waitForTimeout(1000)
+        await page.keyboard.down('ControlLeft')
+        await page.keyboard.press('KeyA')
+        await page.keyboard.sendCharacter("fasijdfiks");
+        await page.keyboard.up('ControlLeft')
+
+      //  await action.clickspanButton(page,"削除")
+     /*   for(let i =0; i<100; i++){
         await action.clickspanButton(page,"新規作成")
         await page.waitForTimeout(500)
         await page.keyboard.press('Tab')
@@ -75,7 +91,7 @@ const readFile =  require('./readFile/readFile');
         await action.clickSendButton(page,"送信")
 
 
-        }  
+        }  */
 
     }catch(e){
         console.log(e)
