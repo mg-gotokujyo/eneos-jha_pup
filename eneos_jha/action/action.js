@@ -90,6 +90,16 @@ const sendtxet = async function (page, eletext, text) {
     console.log(eletext);
   };
   exports.sendtxet = sendtxet;
+  const sendtxetoflabel = async function (page, eletext, text) {
+    let selector = "//label[contains(text(), '"+label+"')]"
+    const [button] = await page.$x(selector);
+    await button.click();
+    console.log(label);
+    await page.keyboard.sendCharacter(text);
+    await page.waitForTimeout(100);
+    console.log(eletext);
+  };
+  exports.sendtxetoflabel = sendtxetoflabel;
 
   const ClickButton = async function (page, tab) {
     await page.waitForSelector(tab);
