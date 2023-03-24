@@ -29,19 +29,30 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 
         // 車両情報クリック
         await action.clickspanButton(page,"JHA【作成・変更】")
-           for (let i= 0; i<300; i++){
+           for (let i= 238; i<300; i++){
     let nextcsv=i+1;
-    console.log(nextcsv)
-    if(csvData[nextcsv][5]!=undefined){
+    let c= 0;
+    let d =0;
+    let e= 0;
+    let f =0;
+    if(csvData[nextcsv]!=undefined){
     if(csvData[nextcsv][5]!=csvData[i][5]){
         console.log(nextcsv+1+"列目は新しい列です")
         await action.clickspanButton(page,"新規作成")
-        await page.waitForTimeout(1000);
-        //await page.click("#app > div > div:nth-child(2) > main > div > div.container.container--fluid > div > div:nth-child(3) > div > div > form > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div > div > div.v-input__slot.white > div.v-input__prepend-inner > div > i")
-       let CreateDate1= csvData[1][2].replace("年","-")
-        let CreateDate2= CreateDate1.replace("月","-")
-        let CreateDate3= CreateDate2.replace("日","-")
-        console.log(CreateDate3)
+        await page.waitForTimeout(2000);
+        await page.click("#A123")
+       // await page.click("#app > div > div:nth-child(2) > main > div > div.container.container--fluid > div > div:nth-child(3) > div > div > form > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div > div > div.v-input__slot.white > div.v-input__prepend-inner > div > i")
+       await page.keyboard.sendCharacter(await action.formatTime(csvData[1][2]));
+       await page.waitForTimeout(2000);
+
+       await page.click("#form7163")
+       await page.keyboard.sendCharacter(await action.formatTime(csvData[1][3]));
+
+       //    console.log(csvData[1][2])        
+    //    console.log(action.formatTime(csvData[1][2]))
+
+        //await action.clicklabelButton("最終改訂日")
+        
         await action.sendtxet(page,Department,csvData[1][1] );     
         await action.sendtxet(page,JhaNumber,csvData[1][4] );
         await action.sendtxet(page,Workname,csvData[1][5] );     
@@ -49,14 +60,30 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
         await action.sendtxet(page,PlantName,csvData[1][0] );     
         await action.sendtxet(page,GroupName,csvData[1][1] );     
         //await action.sendtxet(page,traget,csvData[1][1] );
-        await action.clicklabelButton(page,"作業ステップ")
-        await page.keyboard.sendCharacter(csvData[1][61])
-        await action.clicklabelButton(page,"潜在的な危険要因")
-        await page.keyboard.sendCharacter(csvData[1][62])
-        await action.clicklabelButton(page,"必要な措置、または手順")
-        await page.keyboard.sendCharacter(csvData[1][63])
-        await action.clickspanButton(page," 0行を追加 ") 
+        if(csvData[nextcsv][61]!=csvData[i][61]){
+            console.log("作業ステップを追加します")
+            c++;
+            await action.clickspanButton(page,"作業ステップを追加")
+            await page.waitForTimeout(2000)
+            await action.clicklabelButton(page,""+c+"作業ステップ")
+            await page.keyboard.sendCharacter(csvData[nextcsv][61])
 
+            await action.clicklabelButton(page,""+c+"-"+d+"潜在的な危険要因")
+            await page.keyboard.sendCharacter(csvData[nextcsv][62])
+            await action.clicklabelButton(page,""+c+"-"+d+"必要な措置、または手順")
+            await page.keyboard.sendCharacter(csvData[nextcsv][63])
+            d++;
+
+        }
+        else{
+            await action.clickspanButton(page,"0行を追加")
+            await action.clicklabelButton(page,""+e+"作業ステップ")
+            await page.keyboard.sendCharacter(csvData[1][61])
+            await action.clicklabelButton(page,""+e+"-"+f+"潜在的な危険要因")
+            await page.keyboard.sendCharacter(csvData[1][62])
+            await action.clicklabelButton(page,""+e+"-"+f+"必要な措置、または手順")
+            await page.keyboard.sendCharacter(csvData[1][63])
+        }
         
         console.log(csvData[42])
         console.log(csvData[43])
@@ -74,6 +101,8 @@ const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid
 
 
 
+    }else{
+        console.log("次の列空だよ")
     }}
    
 }

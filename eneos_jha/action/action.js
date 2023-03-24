@@ -201,3 +201,23 @@ const TrackSettlementNumber=async function(page,label){
 };
 
 exports.TrackSettlementNumber = TrackSettlementNumber;
+/* YYYY-MM-DDの形式で返す */
+const formatTime=async function(value){
+    if(value==""){
+        return ""
+    }
+    //年月日とスラッシュに対応
+    value = value.replace("年", "-");
+    value = value.replace("月", "-");
+    value = value.replace("日", "");
+    value = value.replace(/\//g, "-");
+    //桁数を合わせる
+    const times = value.split("-");
+    const month = ("00" + times[1]).slice(-2);
+    const day = ("00" + times[2]).slice(-2);
+
+    return times[0] + "-" + month + "-" + day;
+  };
+  exports.formatTime = formatTime;
+
+  
