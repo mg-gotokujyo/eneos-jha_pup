@@ -84,10 +84,10 @@ const ClicklabelButton = async function(page,label){
 exports.clicklabelButton = ClicklabelButton;
 
 const sendtxet = async function (page, eletext, text) {
+    await page.waitForSelector(eletext);
     await page.click(eletext);
     await page.keyboard.sendCharacter(text);
     await page.waitForTimeout(100);
-    console.log(eletext);
   };
   exports.sendtxet = sendtxet;
   const sendtxetoflabel = async function (page, eletext, text) {
